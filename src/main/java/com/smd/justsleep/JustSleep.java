@@ -24,7 +24,7 @@ import java.util.Set;
 public class JustSleep {
 
     static Set<String> playerSpawnSetSkip = new HashSet<>();
-    private static HashMap<String, BlockPos> validBedMap = new HashMap<>();
+    private static BlockPos clientBedPos = null;
 
     public static final SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(Tags.MOD_ID);
 
@@ -65,23 +65,19 @@ public class JustSleep {
     }
 
     public static BlockPos getBedLocation(EntityPlayer player) {
-        String uuid = player.getUniqueID().toString();
         if (player.world.isRemote) {
-            return validBedMap.getOrDefault(uuid, null);
+            return clientBedPos;
         }
         BlockPos bedLocation = player.getBedLocation(player.dimension);
         if (bedLocation == null) {
             return null;
         }
-        BlockPos bedSpawnLocation = EntityPlayer.getBedSpawnLocation(player.world, bedLocation, false);
-        return bedSpawnLocation;
+        return EntityPlayer.getBedSpawnLocation(player.world, bedLocation, false);
     }
 
     public static void updateClientBedLocation(EntityPlayer player, BlockPos pos) {
         Validate.isTrue(player.world.isRemote);
-        String uuid = player.getUniqueID().toString();
-        validBedMap.remove(uuid);
-        validBedMap.put(uuid, pos);
+        clientBedPos = pos;
     }
 
     public static void updateBedMap(EntityPlayerMP player) {

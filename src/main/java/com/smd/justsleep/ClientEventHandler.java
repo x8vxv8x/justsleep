@@ -3,6 +3,7 @@ package com.smd.justsleep;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiSleepMP;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -24,7 +25,7 @@ public class ClientEventHandler {
         if (event.getGui() instanceof GuiSleepMP) {
             setSpawn = false;
             GuiSleepMP gui = (GuiSleepMP) event.getGui();
-            event.getButtonList().add(button = new GuiButton(202, gui.width / 2 - 100, gui.height - 62, "Set spawn"));
+            event.getButtonList().add(button = new GuiButton(202, gui.width / 2 - 100, gui.height - 62, I18n.format("justsleep.message.set_spawn")));
         }
     }
 
@@ -36,13 +37,13 @@ public class ClientEventHandler {
             boolean isCurrentSpawnBed = player.bedLocation.equals(JustSleep.getBedLocation(player));
             button.visible = JustSleep.hasValidBedLocation(player) && !isCurrentSpawnBed && !setSpawn;
             if (!JustSleep.hasValidBedLocation(player)) {
-                event.getGui().mc.fontRenderer.drawString("Setting spawn point (No previous bed found)", gui.width / 2 - 120, gui.height - 52, Color.RED.getRGB());
+                event.getGui().mc.fontRenderer.drawString(I18n.format("justsleep.message.no_bed_found"), gui.width / 2 - 120, gui.height - 52, Color.RED.getRGB());
             }
             if (isCurrentSpawnBed) {
-                event.getGui().mc.fontRenderer.drawString("This is the current spawn bed", gui.width / 2 - 80, gui.height - 52, Color.BLUE.getRGB());
+                event.getGui().mc.fontRenderer.drawString(I18n.format("justsleep.message.current_spawn_bed"), gui.width / 2 - 80, gui.height - 52, Color.BLUE.getRGB());
             }
             if (setSpawn) {
-                event.getGui().mc.fontRenderer.drawString("Spawn point updated to this bed", gui.width / 2 - 80, gui.height - 52, Color.GREEN.getRGB());
+                event.getGui().mc.fontRenderer.drawString(I18n.format("justsleep.message.spawn_updated"), gui.width / 2 - 80, gui.height - 52, Color.GREEN.getRGB());
             }
         }
     }

@@ -1,0 +1,4 @@
+justsleep.message.no_bed_found=正在设置重生点（未找到之前的床）
+justsleep.message.current_spawn_bed=这是当前的重生床
+justsleep.message.spawn_updated=已将重生点更新至这张床
+justsleep.message.set_spawn=设置重生点
